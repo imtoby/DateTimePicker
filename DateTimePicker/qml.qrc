@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>qml/TimePositioner.qml</file>
+        <file>qml/BasePicker.qml</file>
     </qresource>
 </RCC>
