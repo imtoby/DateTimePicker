@@ -3,15 +3,13 @@ import QtQuick 2.3
 PathView{
     id: spinner
     // public:
+    property int textHorizontalAlignment: Text.AlignHCenter
+    property int textVerticalAlignment: Text.AlignVCenter
 
     function setCurrentIndex(index) {
         positionViewAtIndex(index, PathView.Center)
     }
 
-    property int textHorizontalAlignment: Text.AlignHCenter
-    property int textVerticalAlignment: Text.AlignVCenter
-
-    // setting:
     implicitWidth: 240
     implicitHeight: parent.height
     pathItemCount: 5
@@ -26,53 +24,60 @@ PathView{
         PathLine { x: spinner.width/2; y: spinner.height }
     }
 
-    delegate: Text {
+    delegate: Item {
         id: showItem
         width: spinner.width
-        height: font.pixelSize*2
-        horizontalAlignment: textHorizontalAlignment
-        verticalAlignment: textVerticalAlignment
-        text: model.modelData
-        font.pixelSize: showItem.PathView.isCurrentItem ? 50 : 36
-        color: showItem.PathView.isCurrentItem ? "#333333" : "#999999"
+        height: info.font.pointSize * 2
+
+//        Rectangle { // MouseArea visible Area
+//            anchors.fill: parent
+//            color: "transparent"
+//            border.color: "red"
+//        }
+
+        Text {
+            id: info
+            anchors.centerIn: parent
+
+            horizontalAlignment: textHorizontalAlignment
+            verticalAlignment: textVerticalAlignment
+            text: model.modelData
+            font.pointSize: showItem.PathView.isCurrentItem ? 26 : 16
+            color: showItem.PathView.isCurrentItem ? "#333333" : "#999999"
+            transform: Rotation {
+                origin.x: info.paintedWidth/2
+                origin.y: info.paintedHeight/2.0
+                axis { x: 1; y: 0; z: 0 }
+                angle: {
+                    if (showItem.PathView.view.currentIndex === index) {
+                        return 0
+                    } else if (showItem.PathView.view.currentIndex
+                               === index - 1) {
+                        return -40
+                    } else if (showItem.PathView.view.currentIndex
+                               === index - 2) {
+                        return -70
+                    } else if (showItem.PathView.view.currentIndex
+                               === index + 1) {
+                        return 40
+                    } else if (showItem.PathView.view.currentIndex
+                               === index + 2) {
+                        return 70
+                    }
+                    return -50
+                }
+            }
+        }
+
         MouseArea{
             anchors.fill: parent
             onReleased: {
                 if(containsMouse){
-                    setCurrentIndex(showItem.PathView.isCurrentItem ? (index + 1) : index)
+                    setCurrentIndex(showItem.PathView.isCurrentItem ?
+                                        (index + 1) : index)
                 }
             }
         }
     }
 
-//    Row {
-//        x: 10; y: 10
-//        spacing: 10
-
-//        Text {
-//            id: info
-//            font.pointSize: 26
-//            text: qsTr("text")
-//        }
-//        Text {
-//            font.pointSize: 26
-//            text: qsTr("text")
-//            transform: Rotation { origin.x: info.paintedWidth/2; origin.y: info.paintedHeight/2.0; axis { x: 1; y: 0; z: 0 } angle: 18 }
-//        }
-//        Text {
-//            font.pointSize: 26
-//            text: qsTr("text")
-//            transform: Rotation { origin.x: info.paintedWidth/2; origin.y: info.paintedHeight/2.0; axis { x: 1; y: 0; z: 0 } angle: 36 }
-//        }
-//        Text {
-//            font.pointSize: 26
-//            text: qsTr("text")
-//            transform: Rotation { origin.x: info.paintedWidth/2; origin.y: info.paintedHeight/2.0; axis { x: 1; y: 0; z: 0 } angle: 54 }
-//        }
-//        Text {
-//            font.pointSize: 26
-//            text: qsTr("text")
-//            transform: Rotation { origin.x: info.paintedWidth/2; origin.y: info.paintedHeight/2.0; axis { x: 1; y: 0; z: 0 } angle: 72 }
-//        }
-//    }
 }

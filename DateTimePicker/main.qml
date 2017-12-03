@@ -5,7 +5,7 @@ import "qml"
 Window {
     visible: true
     width: 360
-    height: 360
+    height: 220
 
 //    TimePositioner{
 //        anchors.fill: parent
