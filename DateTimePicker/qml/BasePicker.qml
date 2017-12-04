@@ -17,7 +17,7 @@ PathView{
     preferredHighlightEnd: 0.5
     highlightRangeMode: PathView.StrictlyEnforceRange
     snapMode: PathView.SnapToItem
-    flickDeceleration: 500
+    flickDeceleration: 50
 
     path: Path{
         startX: spinner.width/2; startY: 0;
@@ -42,8 +42,26 @@ PathView{
             horizontalAlignment: textHorizontalAlignment
             verticalAlignment: textVerticalAlignment
             text: model.modelData
-            font.pointSize: showItem.PathView.isCurrentItem ? 26 : 16
-            color: showItem.PathView.isCurrentItem ? "#333333" : "#999999"
+            font.pointSize: showItem.PathView.isCurrentItem ? 24 : 23
+            color: {
+                if (showItem.PathView.view.currentIndex === index) {
+                    return "#111111"
+                } else if (showItem.PathView.view.currentIndex
+                           === index - 1) {
+                    return "#555555"
+                } else if (showItem.PathView.view.currentIndex
+                           === index - 2) {
+                    return "#999999"
+                } else if (showItem.PathView.view.currentIndex
+                           === index + 1) {
+                    return "#555555"
+                } else if (showItem.PathView.view.currentIndex
+                           === index + 2) {
+                    return "#999999"
+                }
+                return "#777777"
+            }
+//            showItem.PathView.isCurrentItem ? "#333333" : "#999999"
             transform: Rotation {
                 origin.x: info.paintedWidth/2
                 origin.y: info.paintedHeight/2.0
@@ -53,18 +71,18 @@ PathView{
                         return 0
                     } else if (showItem.PathView.view.currentIndex
                                === index - 1) {
-                        return -40
+                        return -30
                     } else if (showItem.PathView.view.currentIndex
                                === index - 2) {
-                        return -70
+                        return -60
                     } else if (showItem.PathView.view.currentIndex
                                === index + 1) {
-                        return 40
+                        return 30
                     } else if (showItem.PathView.view.currentIndex
                                === index + 2) {
-                        return 70
+                        return 60
                     }
-                    return -50
+                    return -45
                 }
             }
         }
@@ -80,10 +98,10 @@ PathView{
         }
     }
 
-    Component.onCompleted: {
-        if (count > 2) {
-            setCurrentIndex(2)
-        }
-    }
+//    Component.onCompleted: {
+//        if (count > 2) {
+//            setCurrentIndex(2)
+//        }
+//    }
 
 }

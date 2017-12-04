@@ -15,6 +15,21 @@ Window {
 //    }
 
     BasePicker {
-        model: 2400
+        id: datePicker
+
+        Component.onCompleted: {
+            dataModelManager.initData();
+        }
+
+        Connections {
+            target: dataModelManager
+            ignoreUnknownSignals: true
+            onDateModelInitFinished: {
+                datePicker.model = Qt.binding(
+                            function(){ return dataModelManager.dateModel();});
+                datePicker.setCurrentIndex(
+                            dataModelManager.dateModelInitIndex());
+            }
+        }
     }
 }

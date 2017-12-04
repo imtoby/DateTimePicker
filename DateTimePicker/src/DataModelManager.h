@@ -2,6 +2,18 @@
 #define DATAMODELMANAGER_H
 
 #include <QObject>
+#include <QStringList>
+
+class Worker : public QObject
+{
+    Q_OBJECT
+
+public slots:
+    void doInitData();
+
+signals:
+    void initDataReady();
+};
 
 class DataModelManagerPrivate;
 
@@ -13,8 +25,12 @@ public:
     ~DataModelManager();
 
 signals:
+    void initData();
+    void dateModelInitFinished();
 
 public slots:
+    QStringList dateModel() const;
+    int dateModelInitIndex() const;
 
 private:
     QScopedPointer<DataModelManagerPrivate> d_ptr;

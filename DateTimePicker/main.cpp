@@ -1,31 +1,25 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <QDate>
-#include <QStringList>
-#include <QDebug>
+#include <QQmlEngine>
+#include <QQmlContext>
 
-QDate StartDate(1970, 1, 1);
-QDate EndDate(1950, 12, 31);
-QStringList DateList;
-
-void InitDateList() {
-    QDate date = StartDate;
-    DateList.append(date.toString("yyyy-MM-ddd"));
-    while (date < EndDate) {
-        date.addDays(1);
-        DateList.append(date.toString("yyyy-MM-ddd"));
-    }
-
-    qDebug() << DateList;
-}
+#include "src/DataModelManager.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-    InitDateList();
+
+    DataModelManager* dataModelManager = new DataModelManager(&app);
+
+    engine.rootContext()->setContextProperty("dataModelManager",
+                                             dataModelManager);
+
+    engine.load(QUrl(QLatin1String("qrc:/main.qml")));
+    if (engine.rootObjects().isEmpty()) {
+        return -1;
+    }
 
     return app.exec();
 }
