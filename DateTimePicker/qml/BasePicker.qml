@@ -80,4 +80,10 @@ PathView{
         }
     }
 
+    Component.onCompleted: {
+        if (count > 2) {
+            setCurrentIndex(2)
+        }
+    }
+
 }

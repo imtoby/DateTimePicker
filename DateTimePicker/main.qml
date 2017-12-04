@@ -15,7 +15,6 @@ Window {
 //    }
 
     BasePicker {
-        model: 24
+        model: 2400
     }
-
 }
