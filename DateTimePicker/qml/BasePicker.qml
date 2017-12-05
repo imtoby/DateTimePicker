@@ -42,7 +42,19 @@ PathView{
             horizontalAlignment: textHorizontalAlignment
             verticalAlignment: textVerticalAlignment
             text: model.modelData
-            font.pointSize: showItem.PathView.isCurrentItem ? 24 : 23
+            font.pointSize:  {
+                if (showItem.PathView.view.currentIndex === index) {
+                    return 24
+                } else if (showItem.PathView.view.currentIndex
+                           === index - 2) {
+                    return 22
+                } else if (showItem.PathView.view.currentIndex
+                           === index + 2) {
+                    return 22
+                }
+                return 23
+            }
+                //showItem.PathView.isCurrentItem ? 24 : 23
             color: {
                 if (showItem.PathView.view.currentIndex === index) {
                     return "#111111"

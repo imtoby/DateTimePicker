@@ -5,8 +5,8 @@
 
 namespace {
 QDate CurrentDate = QDate::currentDate();
-QDate StartDate(CurrentDate.year() - 10, 1, 1);
-QDate EndDate(CurrentDate.year() + 10, 12, 31);
+QDate StartDate(CurrentDate.year() - 20, 1, 1);
+QDate EndDate(CurrentDate.year() + 20, 12, 31);
 
 const QString DATE_FORMAT("yyyy-MM-dd ddd");
 
