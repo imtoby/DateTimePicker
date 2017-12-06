@@ -3,5 +3,7 @@
         <file>main.qml</file>
         <file>qml/TimePositioner.qml</file>
         <file>qml/BasePicker.qml</file>
+        <file>qml/DatePicker.qml</file>
+        <file>qml/MonthPicker.qml</file>
     </qresource>
 </RCC>

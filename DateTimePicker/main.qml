@@ -14,22 +14,6 @@ Window {
 //        currentIndex: 0
 //    }
 
-    BasePicker {
-        id: datePicker
-
-        Component.onCompleted: {
-            dataModelManager.initData();
-        }
-
-        Connections {
-            target: dataModelManager
-            ignoreUnknownSignals: true
-            onDateModelInitFinished: {
-                datePicker.model = Qt.binding(
-                            function(){ return dataModelManager.dateModel();});
-                datePicker.setCurrentIndex(
-                            dataModelManager.dateModelInitIndex());
-            }
-        }
+    MonthPicker {
     }
 }

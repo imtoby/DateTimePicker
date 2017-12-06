@@ -26,11 +26,14 @@ public:
 
 signals:
     void initData();
-    void dateModelInitFinished();
+    void dataModelInitFinished();
 
 public slots:
     QStringList dateModel() const;
     int dateModelInitIndex() const;
+
+    QStringList monthModel() const;
+    int monthModelInitIndex() const;
 
 private:
     QScopedPointer<DataModelManagerPrivate> d_ptr;

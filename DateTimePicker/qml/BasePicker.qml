@@ -10,6 +10,7 @@ PathView{
         positionViewAtIndex(index, PathView.Center)
     }
 
+    // private:
     implicitWidth: 240
     implicitHeight: parent.height
     pathItemCount: 5

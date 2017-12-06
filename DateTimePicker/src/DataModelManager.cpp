@@ -8,7 +8,9 @@ QDate CurrentDate = QDate::currentDate();
 QDate StartDate(CurrentDate.year() - 20, 1, 1);
 QDate EndDate(CurrentDate.year() + 20, 12, 31);
 
-const QString DATE_FORMAT("yyyy-MM-dd ddd");
+const QString DATE_BASE_FORMAT("yyyy-MM-dd");
+const QString DATE_FORMAT(DATE_BASE_FORMAT + " ddd");
+const QString MONTH_FORMAT("yyyy-MM");
 
 QStringList DateList;
 int DateInitIndex = 0;
@@ -25,7 +27,27 @@ void InitDateList() {
     if (DateList.size() > 0) {
         DateInitIndex = DateList.indexOf(CurrentDate.toString(DATE_FORMAT));
     }
-    qDebug() << DateInitIndex;
+}
+
+QStringList MonthList;
+int MonthInitIndex = 0;
+
+void InitMonthList() {
+    QDate date = StartDate;
+    MonthList.append(date.toString(MONTH_FORMAT));
+
+    while (date < EndDate) {
+        date = date.addMonths(1);
+        MonthList.append(date.toString(MONTH_FORMAT));
+    }
+
+    if (date.year() != EndDate.year()) {
+        MonthList.pop_back();
+    }
+
+    if (MonthList.size() > 0) {
+        MonthInitIndex = MonthList.indexOf(CurrentDate.toString(MONTH_FORMAT));
+    }
 }
 
 }
@@ -56,7 +78,7 @@ DataModelManager::DataModelManager(QObject *parent) :
     connect(this, &DataModelManager::initData,
             worker, &Worker::doInitData);
     connect(worker, &Worker::initDataReady,
-            this, &DataModelManager::dateModelInitFinished);
+            this, &DataModelManager::dataModelInitFinished);
     d->workerThread.start();
 }
 
@@ -77,8 +99,19 @@ int DataModelManager::dateModelInitIndex() const
     return DateInitIndex;
 }
 
+QStringList DataModelManager::monthModel() const
+{
+    return MonthList;
+}
+
+int DataModelManager::monthModelInitIndex() const
+{
+    return MonthInitIndex;
+}
+
 void Worker::doInitData()
 {
     InitDateList();
+    InitMonthList();
     emit initDataReady();
 }
