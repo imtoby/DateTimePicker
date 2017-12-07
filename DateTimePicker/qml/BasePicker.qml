@@ -10,6 +10,8 @@ PathView{
         positionViewAtIndex(index, PathView.Center)
     }
 
+    signal clicked()
+
     // private:
     implicitWidth: 240
     implicitHeight: parent.height
@@ -106,6 +108,7 @@ PathView{
                 if(containsMouse){
                     setCurrentIndex(showItem.PathView.isCurrentItem ?
                                         (index + 1) : index)
+                    spinner.clicked()
                 }
             }
         }

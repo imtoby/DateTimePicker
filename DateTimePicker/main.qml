@@ -14,6 +14,6 @@ Window {
 //        currentIndex: 0
 //    }
 
-    MonthPicker {
+    YearMonthDayPicker {
     }
 }
