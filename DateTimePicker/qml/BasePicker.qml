@@ -2,6 +2,7 @@ import QtQuick 2.3
 
 PathView{
     id: spinner
+    objectName: "BasePicker"
     // public:
     property int textHorizontalAlignment: Text.AlignHCenter
     property int textVerticalAlignment: Text.AlignVCenter

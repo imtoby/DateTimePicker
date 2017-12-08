@@ -2,6 +2,7 @@ import QtQuick 2.3
 
 BasePicker {
     id: datePicker
+    objectName: "DatePicker"
     clip: true
     Component.onCompleted: {
         dataModelManager.initData();

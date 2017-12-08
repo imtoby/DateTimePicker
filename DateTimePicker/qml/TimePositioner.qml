@@ -2,6 +2,7 @@ import QtQuick 2.3
 
 Item {
     id: timePositioner
+    objectName: "TimePositioner"
 
     readonly property real xPos: width/2.0
     readonly property real yPos: 0

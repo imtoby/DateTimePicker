@@ -14,6 +14,18 @@ Window {
 //        currentIndex: 0
 //    }
 
+//    Timer {
+//        interval: 500
+//        repeat: true
+//        onTriggered: {
+//            yearMonthDayPicker.month = (yearMonthDayPicker.month+1)%12;
+//        }
+//        running: true
+//    }
+
     YearMonthDayPicker {
+        id: yearMonthDayPicker
+        month: 2
+        day: 28
     }
 }
