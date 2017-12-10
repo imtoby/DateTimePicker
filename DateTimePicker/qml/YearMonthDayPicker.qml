@@ -22,7 +22,7 @@ Row {
         property var initDate: new Date
         property bool userOperated: false
 
-        implicitWidth: 120
+        implicitWidth: 90
         Component.onCompleted: {
             initYears();
         }
@@ -51,6 +51,12 @@ Row {
                 setCurrentIndex(i);
             }
         }
+
+//        Rectangle {
+//            anchors.fill: parent
+//            color: "transparent"
+//            border.color: "red"
+//        }
     }
 
     BasePicker {
@@ -85,12 +91,19 @@ Row {
                 setCurrentIndex(i);
             }
         }
+
+//        Rectangle {
+//            anchors.fill: parent
+//            color: "transparent"
+//            border.color: "red"
+//        }
     }
 
     BasePicker {
         id: dayPicker
-        implicitWidth: 60
+        implicitWidth: 100
         property bool userOperated: false
+        property var locale: Qt.locale("zh_CN")
         Component.onCompleted: {
             initDays();
         }
@@ -111,8 +124,10 @@ Row {
             var monthDays = new Date(year, month, 0);
             var days = new Array;
             var n = monthDays.getDate();
+            var newDay = null;
             for (var i=1; i<=n; ++i) {
-                days.push(i);
+                newDay = new Date(year, month, i);
+                days.push(i + " " + newDay.toLocaleDateString(locale, "ddd"));
             }
             model = days;
             i = days.indexOf(day);
@@ -120,6 +135,12 @@ Row {
                 setCurrentIndex(i);
             }
         }
+
+//        Rectangle {
+//            anchors.fill: parent
+//            color: "transparent"
+//            border.color: "red"
+//        }
     }
 
     onMinYearChanged: {
@@ -131,24 +152,28 @@ Row {
     }
 
     onYearChanged: {
+        var newYear = Math.min(Math.max(minYear, year), maxYear);
         if (!yearPicker.userOperated) {
             dayPicker.initDays();
-            yearPicker.setCurrentIndex(year - minYear);
+            yearPicker.setCurrentIndex(newYear - minYear);
         }
         yearPicker.userOperated = false;
     }
 
     onMonthChanged: {
+        var newMonth = Math.min(Math.max(1, month), 12);
         if (!monthPicker.userOperated) {
             dayPicker.initDays();
-            monthPicker.setCurrentIndex(month - 1);
+            monthPicker.setCurrentIndex(newMonth - 1);
         }
         monthPicker.userOperated = false;
     }
 
     onDayChanged: {
+        var maxDays = new Date(year, month, 0).getDate();
+        var newDay = Math.min(Math.max(1, day), maxDays);
         if (!dayPicker.userOperated) {
-            dayPicker.setCurrentIndex(day - 1);
+            dayPicker.setCurrentIndex(newDay - 1);
         }
         dayPicker.userOperated = false;
     }
