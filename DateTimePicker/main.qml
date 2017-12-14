@@ -23,9 +23,9 @@ Window {
 //        running: true
 //    }
 
-    YearMonthDayPicker {
+    YearMonthPicker {
         id: yearMonthDayPicker
+        anchors.fill: parent
         month: 2
-        day: 28
     }
 }
