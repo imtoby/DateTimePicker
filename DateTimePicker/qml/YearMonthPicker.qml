@@ -7,10 +7,9 @@ Item {
     property int maxYear: 2050
     property int minYear: 1970
 
-    property int month: yearPicker.initDate.getMonth() + 1
     property int year: yearPicker.initDate.getFullYear()
+    property int month: yearPicker.initDate.getMonth() + 1
 
-    property alias monthPickerWidth: monthPicker.width
     property alias yearPickerWidth: yearPicker.width
 
     BasePicker {
@@ -55,44 +54,21 @@ Item {
 //        }
     }
 
-    BasePicker {
-        id: monthPicker
-        implicitWidth: 60
-        anchors.left: yearPicker.right
+    TimePositioner {
+        id: timePositioner
         property bool userOperated: false
-        Component.onCompleted: {
-            initMonths();
-        }
-        onFlickEnded: {
-            setCurrentMonth();
-        }
-        onClicked: {
-            setCurrentMonth();
-        }
-        function setCurrentMonth() {
-            userOperated = true;
-            var newMonth = 1 + currentIndex;
-            if (newMonth !== month) {
-                month = newMonth;
-            }
-        }
-        function initMonths() {
-            var months = new Array;
-            for (var i=1; i<=12; ++i) {
-                months.push(i);
-            }
-            model = months;
-            i = months.indexOf(month);
-            if (i > -1) {
-                setCurrentIndex(i);
-            }
-        }
 
-//        Rectangle {
-//            anchors.fill: parent
-//            color: "transparent"
-//            border.color: "red"
-//        }
+        width: Math.min(parent.width - yearPicker.width, parent.height) - 60
+        height: width
+        anchors.right: parent.right
+        anchors.rightMargin: 60
+        anchors.verticalCenter: parent.verticalCenter
+        currentIndex: month%12
+        onCurrentIndexChanged: {
+            timePositioner.userOperated = true;
+            month = currentIndex ? currentIndex : currentIndex + timePositioner.count
+            timePositioner.userOperated = false;
+        }
     }
 
     onMinYearChanged: {
@@ -112,10 +88,8 @@ Item {
     }
 
     onMonthChanged: {
-        var newMonth = Math.min(Math.max(1, month), 12);
-        if (!monthPicker.userOperated) {
-            monthPicker.setCurrentIndex(newMonth - 1);
+        if (!timePositioner.userOperated) {
+            timePositioner.currentIndex = month%12
         }
-        monthPicker.userOperated = false;
     }
 }

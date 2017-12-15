@@ -4,6 +4,7 @@ Item {
     id: timePositioner
     objectName: "TimePositioner"
 
+    readonly property alias count: repeater.count
     readonly property real xPos: width/2.0
     readonly property real yPos: 0
     readonly property real r: width/2.0
@@ -40,7 +41,7 @@ Item {
                 y: yPos + (1-Math.cos(angle*index))*r
 
                 Item{
-                    width: timePositioner.width/(repeater.count/3)
+                    width: timePositioner.width*2/repeater.count
                     height: 200
                     anchors.centerIn: parent
                     rotation: index%(repeater.count/2) * (360/repeater.count)
@@ -54,9 +55,10 @@ Item {
                     }
 
                     Item {
+                        width: timePositioner.width*2/repeater.count
+                        height: timePositioner.width*2/repeater.count
                         x: (parent.width - width)/2
                         y: (parent.height - height)/2
-                        width: 80; height: 80
                         Drag.active: dragArea.drag.active
 
                         function resetPos(){
@@ -96,7 +98,7 @@ Item {
                 }
 
                 Rectangle{
-                    width: 40
+                    width: timePositioner.width*3/repeater.count
                     height: width
                     anchors.centerIn: parent
                     radius: width/2
