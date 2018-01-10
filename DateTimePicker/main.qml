@@ -23,7 +23,7 @@ Window {
 //        running: true
 //    }
 
-    YearMonthPicker {
+    YearMonthDayPicker {
         id: yearMonthDayPicker
         anchors.fill: parent
         onMonthChanged: {

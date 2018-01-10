@@ -121,12 +121,13 @@ Row {
             }
         }
         function initDays() {
-            var monthDays = new Date(year, month, 0);
+            var monthDays = new Date(year, month - 1, 0);
+            console.log("ZDS======monthDays: ", monthDays);
             var days = new Array;
             var n = monthDays.getDate();
             var newDay = null;
             for (var i=1; i<=n; ++i) {
-                newDay = new Date(year, month, i);
+                newDay = new Date(year, month - 1, i);
                 days.push(i + " " + newDay.toLocaleDateString(locale, "ddd"));
             }
             model = days;
@@ -170,7 +171,7 @@ Row {
     }
 
     onDayChanged: {
-        var maxDays = new Date(year, month, 0).getDate();
+        var maxDays = new Date(year, month - 1, 0).getDate();
         var newDay = Math.min(Math.max(1, day), maxDays);
         if (!dayPicker.userOperated) {
             dayPicker.setCurrentIndex(newDay - 1);
