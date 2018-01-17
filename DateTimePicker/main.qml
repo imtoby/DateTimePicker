@@ -26,8 +26,5 @@ Window {
     YearMonthDayPicker {
         id: yearMonthDayPicker
         anchors.fill: parent
-        onMonthChanged: {
-            console.log("ZDS==============>", month)
-        }
     }
 }

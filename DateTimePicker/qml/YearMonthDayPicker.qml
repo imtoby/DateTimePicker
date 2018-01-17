@@ -15,6 +15,8 @@ Row {
     property alias dayPickerWidth: dayPicker.width
     property alias monthPickerWidth: monthPicker.width
     property alias yearPickerWidth: yearPicker.width
+    property var maximumDate: new Date(maxYear, 12, 31)
+    property var minimumDate: new Date(minYear, 1, 1)
 
     BasePicker {
         id: yearPicker
@@ -122,7 +124,6 @@ Row {
         }
         function initDays() {
             var monthDays = new Date(year, month - 1, 0);
-            console.log("ZDS======monthDays: ", monthDays);
             var days = new Array;
             var n = monthDays.getDate();
             var newDay = null;
